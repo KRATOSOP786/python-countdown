@@ -77,22 +77,17 @@ class Countdown(tk.Frame):
         self.stop.pack()
         self.reset.pack()
 
-    def resume_button(self):
-        """ Resumes the timer by adding the pause time to the start time """
-        if self.start is None:
-            raise ValueError("Timer not started")
-        if not self.stop:
-            raise ValueError("Timer is not paused")
-        print('Resuming timer')
-        pausetime = self.start_timer() - self.stop_timer
-        self.timestarted = self.timestarted + stoptime
-        self.paused = False
-
-
     def stop_timer(self):
         if self._timer_on:
             self.after_cancel(self._timer_on)
             self._timer_on=False
+            
+    def resume_button(self):
+        self.label['text'] = self.seconds_left
+        self.countdown()
+        self.start.pack()
+        self.stop.pack()
+        self.reset.pack()        
 
     def convert_seconds_left_to_time(self):
         return datetime.timedelta(seconds=self.seconds_left)
